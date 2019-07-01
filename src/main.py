@@ -4,10 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import argparse
 
-UPPER_THRESHOLD_NON_ZERO = 16000
-LOWER_THRESHOLD_NON_ZERO = 13000
-THRESHOLD_BYNARY = 150
-
 parser = argparse.ArgumentParser(description='Griffols Card Detector')
 parser.add_argument('--debug', default=False, type=bool, help='Show histograms and images')
 parser.add_argument('--threshold_non_zero', default=.25, type=float, help='Set threshold non zeros in %')
