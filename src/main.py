@@ -46,19 +46,16 @@ def main():
         frame_path = os.path.join(in_path, filename)
         image = cv2.imread(frame_path)
         roi_list = define_ROI(image)
-        count_correct_roi = 0
-        for roi in roi_list:
-            if opt.debug:
-                cv2.imshow('rgb', roi)
-                cv2.waitKey()
-            yuv = RGB_to_YUV(roi)
-            binary = YUV_to_bin(yuv)
-            non_zero = np.count_nonzero(binary)
-            lower_th = binary.size-((opt.threshold_non_zero+.05)*binary.size)
-            upper_th = binary.size-((opt.threshold_non_zero-.05)*binary.size)
-            if lower_th < non_zero < upper_th:
-                count_correct_roi += 1
-        if count_correct_roi == 2:
+        roi = np.concatenate((roi_list[0], roi_list[1]), axis=0)
+        if opt.debug:
+            cv2.imshow('rgb', roi)
+            cv2.waitKey()
+        yuv = RGB_to_YUV(roi)
+        binary = YUV_to_bin(yuv)
+        non_zero = np.count_nonzero(binary)
+        lower_th = binary.size-((opt.threshold_non_zero+.05)*binary.size)
+        upper_th = binary.size-((opt.threshold_non_zero-.05)*binary.size)
+        if lower_th < non_zero < upper_th:
             print("NO HAY TARGETA EN: " + filename)
         else:
             print("HAY TARGETA EN: " + filename)
